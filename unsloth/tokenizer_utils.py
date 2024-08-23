@@ -1159,15 +1159,6 @@ def patch_sft_trainer_tokenizer():
         "       'Please do not edit specific areas of the Unsloth codebase or you will get CUDA segfaults.'\n"\
         "    )\n"\
         "pass\n"\
-        "import subprocess, re, gc, numpy as np\n"\
-        "a = np.array([0,])\n"\
-        "try:\n"\
-        "    a = subprocess.check_output('nvidia-smi --query-gpu=memory.used --format=csv', shell = True)\n"\
-        "    a = re.findall(rb'([\\d]{1,})[\\s]{1,}M', a)\n"\
-        "    a = np.array([int(x.decode('utf-8'))/1024 for x in a])\n"\
-        "except:\n"\
-        "    if not torch.cuda.is_available():\n"\
-        "        raise RuntimeError('Unsloth: We do not support AMD / Intel machines yet - it is a work in progress!')\n"\
         "for _ in range(3):\n"\
         "    gc.collect()\n"\
         "    torch.cuda.empty_cache()\n"\
